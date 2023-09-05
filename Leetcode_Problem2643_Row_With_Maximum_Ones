@@ -1,0 +1,48 @@
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* rowAndMaximumOnes(int** mat, int matSize, int* matColSize, int* returnSize){
+    int count;
+    int* ans = (int*)malloc(sizeof(int)*2);
+    ans[0] = 0;
+    ans[1] = 0;
+    *returnSize = 2;
+    for( int i = 0 ; i < matSize ; i++)
+    {
+        count = 0;
+        for( int j = 0 ; j < *matColSize ; j++)
+            count = (mat[i][j]) ? count+1 : count;
+        if(ans[1] < count)
+        {
+            ans[0] = i;
+            ans[1] = count;
+        }
+    }
+    return ans;
+}
+
+
+-------------------------------------------------------------------------------------------
+
+
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* rowAndMaximumOnes(int** mat, int matSize, int* matColSize, int* returnSize){
+    int max_up=-1;
+    int row=0;
+    int *res=(int*)malloc(sizeof(int)*2);
+    for(int i=0;i<matSize;i++){
+        for(int j=1;j<*matColSize;j++){
+            mat[i][j]+=mat[i][j-1];
+        }
+        if(mat[i][*matColSize-1] > max_up){
+            max_up=mat[i][*matColSize-1];
+            row=i;
+        }
+    }
+    res[0]=row;
+    res[1]=max_up;
+    *returnSize=2;
+    return res;
+}
